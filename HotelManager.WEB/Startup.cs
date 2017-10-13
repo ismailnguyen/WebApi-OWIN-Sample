@@ -6,6 +6,7 @@ using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 using Swashbuckle.Application;
 using System.Web.Http;
+using WebApi.BasicAuth;
 
 [assembly: OwinStartup(typeof(HotelManagerApi.Startup))]
 
@@ -32,6 +33,8 @@ namespace HotelManagerApi
             container.Register<IRoomService, RoomService>(Lifestyle.Singleton);
 
             httpConfig.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
+
+            httpConfig.EnableBasicAuth();
 
             httpConfig
                 .EnableSwagger(c =>

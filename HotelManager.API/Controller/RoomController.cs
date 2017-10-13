@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace HotelManager.API.Controller
 {
-    [RoutePrefix("api/room")]
+    [RoutePrefix("api/rooms")]
     public class RoomController : ApiController
     {
         private readonly IRoomService roomService;
@@ -24,6 +24,7 @@ namespace HotelManager.API.Controller
         }
 
         [Route]
+        [Authorize(Roles = "Admin")]
         public IList<Room> GetBookedRooms()
         {
             return roomService.GetBookedRooms();
