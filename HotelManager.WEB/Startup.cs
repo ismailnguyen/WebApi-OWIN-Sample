@@ -21,14 +21,14 @@ namespace HotelManagerApi
             // Itinéraires de l'API Web
             httpConfig.MapHttpAttributeRoutes();
 
-            httpConfig.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+            //httpConfig.Routes.MapHttpRoute(
+            //    name: "DefaultApi",
+            //    routeTemplate: "api/{controller}/{id}",
+            //    defaults: new { id = RouteParameter.Optional }
+            //);
 
             Container container = new Container();
-            container.Register<IRoomService, RoomService>();
+            container.Register<IRoomService, RoomService>(Lifestyle.Singleton);
 
             httpConfig.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
 
@@ -39,6 +39,14 @@ namespace HotelManagerApi
                     c.PrettyPrint();
                 })
                 .EnableSwaggerUi();
+
+            httpConfig.Routes.MapHttpRoute(
+                name: "",
+                routeTemplate: "",
+                defaults: null,
+                handler: new RedirectHandler(SwaggerDocsConfig.DefaultRootUrlResolver, "swagger/ui/index"),
+                constraints: null
+            );
 
             app.UseWebApi(httpConfig);
         }
