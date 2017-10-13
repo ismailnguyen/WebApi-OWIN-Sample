@@ -21,7 +21,7 @@ namespace HotelManager.API
             return roomService.GetAvailableRoomNumbers();
         }
 
-        [Route("{id}")]
+        [Route("{id}", Name = "GetRoomByIdRoute")]
         [HttpGet]
         public IHttpActionResult Get(int id)
         {
@@ -40,9 +40,11 @@ namespace HotelManager.API
         [SwaggerResponse(HttpStatusCode.Created, "Room created", typeof(string))]
         public IHttpActionResult Post([FromBody] int roomNumber)
         {
-            roomService.AddRoom(roomNumber);
+            var room = roomService.AddRoom(roomNumber);
 
-            return Ok();
+            var location = Url.Link("GetRoomByIdRoute", new { id = room.RoomNumber });
+
+            return Created(location, room);
         }
     }
 }

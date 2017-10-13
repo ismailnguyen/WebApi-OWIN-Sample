@@ -6,7 +6,7 @@ namespace HotelManager.API
     {
         IList<Room> GetAvailableRoomNumbers();
 
-        void AddRoom(int roomNumber);
+        Room AddRoom(int roomNumber);
 
         Room GetRoom(int roomNumber);
     }

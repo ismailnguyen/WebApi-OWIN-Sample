@@ -9,9 +9,9 @@ namespace HotelManager.API
 
         public RoomService()
         {
-            rooms.Add(new Room() { Number = 2 });
-            rooms.Add(new Room() { Number = 3 });
-            rooms.Add(new Room() { Number = 4 });
+            rooms.Add(Room.FromNumber(1));
+            rooms.Add(Room.FromNumber(2));
+            rooms.Add(Room.FromNumber(3));
         }
 
         public IList<Room> GetAvailableRoomNumbers()
@@ -19,14 +19,18 @@ namespace HotelManager.API
             return rooms;
         }
 
-        public void AddRoom(int roomNumber)
+        public Room AddRoom(int roomNumber)
         {
-            rooms.Add(new Room() { Number = roomNumber });
+            var room = Room.FromNumber(roomNumber);
+
+            rooms.Add(room);
+
+            return room;
         }
 
         public Room GetRoom(int roomNumber)
         {
-            return rooms?.FirstOrDefault(r => r.Number == roomNumber);
+            return rooms?.FirstOrDefault(r => r.RoomNumber == roomNumber);
         }
     }
 }
