@@ -14,12 +14,12 @@ namespace HotelManager.API
             rooms.Add(Room.FromNumber(3));
         }
 
-        public IList<Room> GetAvailableRoomNumbers()
+        public IList<Room> GetAvailableRooms()
         {
             return rooms;
         }
 
-        public Room AddRoom(int roomNumber)
+        public Room BookRoom(int roomNumber)
         {
             var room = Room.FromNumber(roomNumber);
 

@@ -18,7 +18,7 @@ namespace HotelManager.API
         [Route]
         public IList<Room> Get()
         {
-            return roomService.GetAvailableRoomNumbers();
+            return roomService.GetAvailableRooms();
         }
 
         [Route("{id}", Name = "GetRoomByIdRoute")]
@@ -29,7 +29,7 @@ namespace HotelManager.API
             
             if (room == null)
             {
-                return BadRequest();
+                return BadRequest("Chambre non trouvée !");
             }
 
             return Ok(room);
@@ -38,13 +38,18 @@ namespace HotelManager.API
         [Route]
         [HttpPost]
         [SwaggerResponse(HttpStatusCode.Created, "Room created", typeof(string))]
-        public IHttpActionResult Post([FromBody] int roomNumber)
+        public IHttpActionResult Post([FromBody] Room room)
         {
-            var room = roomService.AddRoom(roomNumber);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            var location = Url.Link("GetRoomByIdRoute", new { id = room.RoomNumber });
+            var bookedRoom = roomService.BookRoom(room.RoomNumber);
 
-            return Created(location, room);
+            var location = Url.Link("GetRoomByIdRoute", new { id = bookedRoom.RoomNumber });
+
+            return Created(location, bookedRoom);
         }
     }
 }

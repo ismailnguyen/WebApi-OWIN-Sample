@@ -4,9 +4,9 @@ namespace HotelManager.API
 {
     public interface IRoomService
     {
-        IList<Room> GetAvailableRoomNumbers();
+        IList<Room> GetAvailableRooms();
 
-        Room AddRoom(int roomNumber);
+        Room BookRoom(int roomNumber);
 
         Room GetRoom(int roomNumber);
     }
