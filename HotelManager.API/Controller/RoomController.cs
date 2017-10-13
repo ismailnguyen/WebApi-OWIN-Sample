@@ -1,9 +1,11 @@
-﻿using Swashbuckle.Swagger.Annotations;
+﻿using HotelManager.API.Model;
+using HotelManager.API.Service;
+using Swashbuckle.Swagger.Annotations;
 using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
 
-namespace HotelManager.API
+namespace HotelManager.API.Controller
 {
     [RoutePrefix("api/room")]
     public class RoomController : ApiController
@@ -15,10 +17,16 @@ namespace HotelManager.API
             this.roomService = roomService;
         }
 
-        [Route]
-        public IList<Room> Get()
+        [Route("availables")]
+        public IList<int> GetAvailableRooms()
         {
             return roomService.GetAvailableRooms();
+        }
+
+        [Route]
+        public IList<Room> GetBookedRooms()
+        {
+            return roomService.GetBookedRooms();
         }
 
         [Route("{id}", Name = "GetRoomByIdRoute")]
@@ -45,7 +53,7 @@ namespace HotelManager.API
                 return BadRequest(ModelState);
             }
 
-            var bookedRoom = roomService.BookRoom(room.RoomNumber);
+            var bookedRoom = roomService.BookRoom(room);
 
             var location = Url.Link("GetRoomByIdRoute", new { id = bookedRoom.RoomNumber });
 

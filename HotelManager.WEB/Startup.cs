@@ -1,4 +1,5 @@
 ﻿using HotelManager.API;
+using HotelManager.API.Service;
 using Microsoft.Owin;
 using Owin;
 using SimpleInjector;
